@@ -22,10 +22,10 @@ variable "inst_type" {
 
 # Define region in a variable
 variable "deploy_region" {
-  default = "us-east-2"
+  default = "eu-north-1"
 } 
 
-# EC2 AMI:  us-east-2	bionic	18.04 LTS	amd64	hvm:instance-store	release 20201211.1
+# EC2 AMI:  eu-north-1	bionic	18.04 LTS	amd64	hvm:ebs-ssd	 release 20201211.1
 variable "image_id" {
-  default = "ami-0ee2e39b4d1c36cf4"
+  default = "ami-0a7e3117f91bf347f"
 }

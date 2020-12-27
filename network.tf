@@ -1,8 +1,8 @@
 # Create separate VPC
 resource "aws_vpc" "vpc1" {
-    cidr_block = [“10.0.0.0/16”]
+    cidr_block = "10.0.1.0/24"
 
-    tags {
+    tags = {
         Name = "vpc1"
     }
 }
@@ -10,7 +10,7 @@ resource "aws_vpc" "vpc1" {
 # Create IGW
 resource "aws_internet_gateway" "internet_gw" {
     vpc_id = aws_vpc.vpc1.id
-    tags {
+    tags = {
         Name = "internet_gw"
     }
 }
@@ -24,7 +24,7 @@ resource "aws_route_table" "pub_rt" {
         gateway_id = aws_internet_gateway.internet_gw.id //use gateway for internet
     }
     
-    tags {
+    tags = {
         Name = "pub_rt"
     }
 }
@@ -32,11 +32,12 @@ resource "aws_route_table" "pub_rt" {
 # Create public subnet for Boxfuse project
 resource "aws_subnet" "bf_pub_subnet_1" {
     vpc_id = aws_vpc.vpc1.id
-    cidr_block = "10.0.1.0/29"
+    //cidr_block = "10.0.1.0/24"
+    cidr_block = cidrsubnet(aws_vpc.vpc1.cidr_block,4,1) //subnet in region "a" availability zone
     map_public_ip_on_launch = "true"
     availability_zone = var.deploy_region
     
-    tags {
+    tags = {
         Name = "bf_pub_subnet_1"
     }
 }
@@ -59,7 +60,7 @@ resource "aws_security_group" "allow_ssh_and_webtomcat" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["84.201.180.72/0"] //my ip
   }
 
   ingress {
