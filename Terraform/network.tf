@@ -1,6 +1,7 @@
 # Create separate VPC
 resource "aws_vpc" "vpc1" {
     cidr_block = "10.0.1.0/24"
+    instance_tenancy = "default"
 
     tags = {
         Name = "vpc1"
@@ -32,11 +33,10 @@ resource "aws_route_table" "pub_rt" {
 # Create public subnet for Boxfuse project
 resource "aws_subnet" "bf_pub_subnet_1" {
     vpc_id = aws_vpc.vpc1.id
-    //cidr_block = "10.0.1.0/24"
-    cidr_block = cidrsubnet(aws_vpc.vpc1.cidr_block,4,1) //subnet in region "a" availability zone
+    availability_zone = var.deploy_az
+    cidr_block = "10.0.1.16/28"
     map_public_ip_on_launch = "true"
-    availability_zone = var.deploy_region
-    
+        
     tags = {
         Name = "bf_pub_subnet_1"
     }
@@ -56,11 +56,11 @@ resource "aws_security_group" "allow_ssh_and_webtomcat" {
   vpc_id      = aws_vpc.vpc1.id
 
   ingress {
-    description = "Incoming ssh at 22 from everywhere"
+    description = "Incoming ssh at 22"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["84.201.180.72/0"] //my ip
+    cidr_blocks = ["0.0.0.0/0"] //enter here your ip
   }
 
   ingress {

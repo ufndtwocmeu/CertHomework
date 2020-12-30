@@ -1,0 +1,6 @@
+---
+# common defaults
+
+AWS_AK_ID: "enter your aws access key id here"
+AWS_SA_KEY: "enter your aws secret access key here"
+AWS_DR: "us-east-2"

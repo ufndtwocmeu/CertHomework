@@ -1,0 +1,4 @@
+---
+# defaults for builder instance
+boxfuse_link: "https://github.com/boxfuse/boxfuse-sample-java-war-hello.git"
+mybucket: "s3://mybacket1.ufndtwocmeu.ru"

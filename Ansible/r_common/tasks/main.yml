@@ -1,0 +1,15 @@
+---
+# Tasks for all instances
+- name: Ensure common packages are installed
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - awscli
+
+- name: Export aws access key ID
+  command: export AWS_ACCESS_KEY_ID="{{ AWS_AK_ID }}"
+
+- name: Export aws secret access key
+  command: export AWS_SECRET_ACCESS_KEY="{{ AWS_SA_KEY }}"     
+
+- name: Export aws default region
+  command: export AWS_DEFAULT_REGION="{{ AWS_DR }}" 

@@ -1,0 +1,18 @@
+---
+- name: Build Boxfuse
+  hosts: boxfuse_builder
+  remote_user: ubuntu
+  become: yes
+
+  roles:
+   - r_common
+   - r_builder
+
+- name: Deploy Boxfuse
+  hosts: boxfuse_prod
+  remote_user: ubuntu
+  become: yes
+
+  roles:
+   - r_common
+   - r_prod

@@ -1,0 +1,24 @@
+---
+# Tasks for prod instance
+
+- name: Ensure Docker is present
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - docker.io
+
+- name: Get boxfuse war file from aws s3
+  amazon.aws.aws_s3:
+    bucket: "{{ mybucket }}"
+    object: /boxfuse/hello-1.0.war
+    dest: /data/boxfuse/target/hello-1.0.war
+    mode: get    
+
+- name: Run Tomcat container
+  community.docker.docker_container:
+    name: boxfuse
+    image: tomcat:9.0.20-jre8-alpine
+    state: started
+    ports:
+     - "8080:8080"
+    volumes:
+      - /data/boxfuse/target:/usr/local/tomcat/webapps

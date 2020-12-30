@@ -1,0 +1,25 @@
+---
+# Tasks for builder instance
+
+- name: Ensure Java and Maven are present
+  apt: name={{item}} state=present update_cache=yes
+  with_items:
+    - openjdk-8-jdk
+    - maven3
+
+- name: Clone the Boxfuse project
+  git:
+    repo: "{{ boxfuse_link }}"
+    dest: /data/boxfuse
+
+- name: Build Boxfuse project war
+  command: mvn -f /data/boxfuse/pom.xml clean package
+
+- name: Put boxfuse war file to aws s3
+  amazon.aws.aws_s3:
+    bucket: "{{ mybucket }}"
+    object: /boxfuse/hello-1.0.war
+    src: /data/boxfuse/target/hello-1.0.war
+    mode: put  
+
+
