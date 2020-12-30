@@ -2,7 +2,7 @@
 # Create rsa pub key for ssh
 resource "aws_key_pair" "ssh_rsa_key" {
   key_name   = "ssh_rsa_key"
-  public_key = $MY_RSA_PUB_KEY //var.my_rsa_pub_key
+  public_key = var.my_rsa_pub_key
   
 } 
 

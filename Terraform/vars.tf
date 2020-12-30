@@ -1,14 +1,14 @@
-/*# Define access and secret key for aws in variables
+# Define access and secret key for aws in variables
 variable "my_aws_access_key" {
-  default = $MY_AWS_ACCESS_KEY
+  default = "enter your key"
 } 
 variable "my_aws_secret_key" {
-  default = $MY_AWS_SECRET_KEY
+  default = "enter your key"
 } 
 
 variable "my_rsa_pub_key" {
-  default = $MY_RSA_PUB_KEY
-} */
+  default = "enter your key"
+}
 
 
 # Define instance type in a variable
