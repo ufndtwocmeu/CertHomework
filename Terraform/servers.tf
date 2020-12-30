@@ -49,14 +49,8 @@ provisioner "local-exec" {
     command = <<EOF
     #!/bin/bash
     sudo sed -i "/boxfuse_prod/d" "/etc/ansible/hosts" 
-    sudo echo -e "[boxfuse_prod] \n${aws_instance.builder.public_ip} label=boxfuse_prod" >> /etc/ansible/hosts
+    sudo echo -e "[boxfuse_prod] \n${aws_instance.prod.public_ip} label=boxfuse_prod" >> /etc/ansible/hosts
     EOF
   }
 
 }
-
-/*
-export AWS_ACCESS_KEY_ID=${var.my_aws_access_key}
-export AWS_SECRET_ACCESS_KEY=${var.my_aws_secret_key}
-export AWS_DEFAULT_REGION=${var.deploy_region}
-*/
