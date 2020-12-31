@@ -1,3 +1,2 @@
 ---
 # defaults for prod instance
-mybucket: "s3://mybacket1.ufndtwocmeu.ru"

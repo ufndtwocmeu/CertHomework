@@ -8,6 +8,9 @@
 
 - name: Get boxfuse war file from aws s3
   amazon.aws.aws_s3:
+    aws_access_key: "{{ AWS_AK_ID }}"
+    aws_secret_key: "{{ AWS_SA_KEY }}"
+    region: "{{ AWS_DR }}"
     bucket: "{{ mybucket }}"
     object: /boxfuse/hello-1.0.war
     dest: /data/boxfuse/target/hello-1.0.war
