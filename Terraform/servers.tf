@@ -19,8 +19,14 @@ resource "aws_instance" "builder" {
   #install python and boto, allow root coonection with pub key, clear pub key from aws scripts in authorized_keys, restart ssh
   user_data = <<EOF
 #!/bin/bash
-sudo apt update && apt -y upgrade && apt install -y python python.pip
-sudo pip install boto
+sudo apt update
+sudo apt install -y software-properties-common
+sudo apt-add-repository -y universe
+sudo apt-add-repository -y ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install -y python3.9
+sudo apt install -y python3-pip
+sudo pip3 install boto3
 sudo echo -e "PermitRootLogin prohibit-password" >> /etc/ssh/sshd_config
 sudo echo -e "${var.my_rsa_pub_key}" > /root/.ssh/authorized_keys
 sudo systemctl restart ssh || systemctl restart sshd
@@ -51,8 +57,14 @@ resource "aws_instance" "prod" {
   #install python and boto, allow root coonection with pub key, clear pub key from aws scripts in authorized_keys, restart ssh
   user_data = <<EOF
 #!/bin/bash
-sudo apt update && apt -y upgrade && apt install -y python python.pip
-sudo pip install boto
+sudo apt update
+sudo apt install -y software-properties-common
+sudo apt-add-repository -y universe
+sudo apt-add-repository -y ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install -y python3.9
+sudo apt install -y python3-pip
+sudo pip3 install boto3
 sudo echo -e "PermitRootLogin prohibit-password" >> /etc/ssh/sshd_config
 sudo echo -e "${var.my_rsa_pub_key}" > /root/.ssh/authorized_keys
 sudo systemctl restart ssh || systemctl restart sshd
