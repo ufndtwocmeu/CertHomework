@@ -15,12 +15,18 @@ resource "aws_instance" "builder" {
   vpc_security_group_ids = [aws_security_group.allow_ssh_and_webtomcat.id]
   subnet_id = aws_subnet.bf_pub_subnet_1.id
   key_name = aws_key_pair.ssh_rsa_key.key_name
+
+  #install python and boto, allow root coonection with pub key, clear pub key from aws scripts in authorized_keys, restart ssh
   user_data = <<EOF
 #!/bin/bash
 sudo apt update && apt -y upgrade && apt install -y python python.pip
 sudo pip install boto
+sudo echo -e "PermitRootLogin prohibit-password" >> /etc/ssh/sshd_config
+sudo echo -e "${var.my_rsa_pub_key}" > /root/.ssh/authorized_keys
+sudo systemctl restart ssh || systemctl restart sshd
 EOF
 
+#add created instance to local ansible hosts config
 provisioner "local-exec" {
     command = <<EOF
     #!/bin/bash
@@ -31,6 +37,8 @@ provisioner "local-exec" {
 
 }
 
+
+
 # Create prod instance
 resource "aws_instance" "prod" {
   ami = var.image_id
@@ -39,12 +47,18 @@ resource "aws_instance" "prod" {
   vpc_security_group_ids = [aws_security_group.allow_ssh_and_webtomcat.id]
   subnet_id = aws_subnet.bf_pub_subnet_1.id
   key_name = aws_key_pair.ssh_rsa_key.key_name
+
+  #install python and boto, allow root coonection with pub key, clear pub key from aws scripts in authorized_keys, restart ssh
   user_data = <<EOF
 #!/bin/bash
 sudo apt update && apt -y upgrade && apt install -y python python.pip
 sudo pip install boto
+sudo echo -e "PermitRootLogin prohibit-password" >> /etc/ssh/sshd_config
+sudo echo -e "${var.my_rsa_pub_key}" > /root/.ssh/authorized_keys
+sudo systemctl restart ssh || systemctl restart sshd
 EOF
 
+//add created instance to local ansible hosts config
 provisioner "local-exec" {
     command = <<EOF
     #!/bin/bash
