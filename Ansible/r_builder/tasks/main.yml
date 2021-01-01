@@ -14,7 +14,7 @@
     dest: "{{ boxfuse_dir }}"
 
 - name: Build Boxfuse project war
-  command: mvn -f "{{ boxfuse_dir }}"/pom.xml clean package
+  command: "mvn -f {{ boxfuse_dir }}/pom.xml clean package"
 
 - name: Put boxfuse war file to aws s3
   amazon.aws.aws_s3:
@@ -23,5 +23,5 @@
     region: "{{ AWS_DR }}"
     bucket: "{{ s3bucket }}"
     object: "{{ s3bucket_file }}"
-    src: "{{ boxfuse_dir }}"/target/hello-1.0.war
+    src: "{{ boxfuse_dir }}/target/hello-1.0.war"
     mode: put

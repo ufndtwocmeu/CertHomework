@@ -65,6 +65,7 @@ sudo apt update
 sudo apt install -y python3.9
 sudo apt install -y python3-pip
 sudo pip3 install boto3
+sudo pip3 install docker
 sudo echo -e "PermitRootLogin prohibit-password" >> /etc/ssh/sshd_config
 sudo echo -e "${var.my_rsa_pub_key}" > /root/.ssh/authorized_keys
 sudo systemctl restart ssh || systemctl restart sshd

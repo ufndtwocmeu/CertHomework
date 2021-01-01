@@ -1,15 +1,15 @@
 ---
 # Tasks for prod instance
 
-- name: Ensure Java and Maven are present
-  apt:
-    pkg:
-    - docker.io
-    update_cache: yes     
+#- name: Ensure Docker is present
+#  apt:
+#    pkg:
+#    - docker.io
+#    update_cache: yes     
 
 - name: Create a directory for boxfuse war file
   file:
-    path: "{{ boxfuse_dir }}"/target
+    path: "{{ boxfuse_dir }}/target"
     state: directory
     mode: '0755'
 
@@ -20,7 +20,7 @@
     region: "{{ AWS_DR }}"
     bucket: "{{ s3bucket }}"
     object: "{{ s3bucket_file }}"
-    dest: "{{ boxfuse_dir }}"/target/hello-1.0.war
+    dest: "{{ boxfuse_dir }}/target/hello-1.0.war"
     mode: get    
 
 - name: Run Tomcat container
@@ -31,4 +31,4 @@
     ports:
      - "8080:8080"
     volumes:
-      - "{{ boxfuse_dir }}"/target:/usr/local/tomcat/webapps
+      - "{{ boxfuse_dir }}/target:/usr/local/tomcat/webapps"
