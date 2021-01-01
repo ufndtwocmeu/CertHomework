@@ -1,6 +1,7 @@
 ---
 # Tasks for all instances
 - name: Ensure common packages are installed
-  apt: name={{item}} state=present update_cache=yes
-  with_items:
+  apt:
+    pkg:
     - mc
+    update_cache: yes    

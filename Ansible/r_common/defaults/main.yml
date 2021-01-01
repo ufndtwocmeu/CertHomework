@@ -4,4 +4,6 @@
 AWS_AK_ID: "enter your aws access key id here"
 AWS_SA_KEY: "enter your aws secret access key here"
 AWS_DR: "us-east-2"
-mybucket: "s3://mybacket1.ufndtwocmeu.ru"
+s3bucket: "mybacket1.ufndtwocmeu.ru"
+s3bucket_file: "/boxfuse/hello-1.0.war"
+boxfuse_dir: "/data/boxfuse"

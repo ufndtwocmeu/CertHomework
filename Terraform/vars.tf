@@ -23,7 +23,7 @@ variable "deploy_region" {
 
 # Define availability zone in variable
 variable "deploy_az" {
-  default = "us-east-2a"
+  default = "${var.deploy_region}a"
 } 
 
 # EC2 AMI:  eu-north-1	bionic	18.04 LTS	amd64	hvm:ebs-ssd	 release 20201211.1
