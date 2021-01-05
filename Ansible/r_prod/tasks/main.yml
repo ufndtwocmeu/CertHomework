@@ -1,11 +1,11 @@
 ---
 # Tasks for prod instance
 
-#- name: Ensure Docker is present
-#  apt:
-#    pkg:
-#    - docker.io
-#    update_cache: yes     
+- name: Ensure Docker is present
+  apt:
+    pkg:
+    - docker.io
+    update_cache: yes     
 
 - name: Create a directory for boxfuse war file
   file:
