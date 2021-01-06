@@ -38,6 +38,7 @@ provisioner "local-exec" {
     #!/bin/bash
     sudo sed -i "/boxfuse_builder/d" "/etc/ansible/hosts" 
     sudo echo -e "[boxfuse_builder] \n${aws_instance.builder.public_ip} label=boxfuse_builder" >> /etc/ansible/hosts
+    sudo ssh-copy-id -o StrictHostKeyChecking=no root@${aws_instance.builder.public_ip}
     EOF
   }
 
@@ -77,6 +78,7 @@ provisioner "local-exec" {
     #!/bin/bash
     sudo sed -i "/boxfuse_prod/d" "/etc/ansible/hosts" 
     sudo echo -e "[boxfuse_prod] \n${aws_instance.prod.public_ip} label=boxfuse_prod" >> /etc/ansible/hosts
+    sudo ssh-copy-id -o StrictHostKeyChecking=no root@${aws_instance.prod.public_ip}
     EOF
   }
 
