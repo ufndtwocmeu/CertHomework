@@ -101,7 +101,7 @@ stage("Request data for AWS") {
             dir('Ansible') {
                 echo 'Build and deploy Boxfuse project at AWS with Ansible'
 
-                sh "sudo ansible-playbook boxfuse.yml --extra-vars \"AWS_AK_ID=${MY_AWS_ACCESS_KEY} AWS_SA_KEY=${MY_AWS_SECRET_KEY} s3bucket=${MY_AWS_S3_BUCKET}\""
+                sh "sudo ansible-playbook boxfuse.yml --ssh-extra-args=\"-o StrictHostKeyChecking=no\" --extra-vars \"AWS_AK_ID=${MY_AWS_ACCESS_KEY} AWS_SA_KEY=${MY_AWS_SECRET_KEY} s3bucket=${MY_AWS_S3_BUCKET}\""
             }
         }
     }
