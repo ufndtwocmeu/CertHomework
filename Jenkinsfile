@@ -1,4 +1,4 @@
-// Build and deploy Boxfuse project using AWS EC2 and S3
+// Build and deploy Boxfuse project (https://github.com/boxfuse/boxfuse-sample-java-war-hello.git)  using AWS EC2 and S3
 pipeline {
 
   agent any
@@ -16,8 +16,6 @@ pipeline {
     stage ('Install Terraform')  {
 
         steps {
-                echo 'Install Terraform'
-
                 sh 'sudo wget -r https://releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip'
                 sh 'sudo unzip -o releases.hashicorp.com/terraform/0.12.29/terraform_0.12.29_linux_amd64.zip'
                 sh 'sudo cp -f terraform /bin/'
@@ -28,8 +26,6 @@ pipeline {
     stage ('Install Boto and Ansible')  {
 
         steps {
-                echo 'Install Boto and Ansible'
-
                 sh 'sudo apt update'
                 sh 'sudo apt install software-properties-common'
                 sh 'sudo apt-add-repository -y universe'
@@ -85,11 +81,12 @@ stage("Request data for AWS") {
 
         steps {
             dir('Terraform') {
-                echo 'Provision infrastructure at AWS with Terraform'
 
                 sh 'sudo terraform init'
                 sh "sudo terraform plan -out  boxfuse.tfplan -var \"my_aws_access_key=${MY_AWS_ACCESS_KEY}\" -var \"my_aws_secret_key=${MY_AWS_SECRET_KEY}\" -var \"my_rsa_pub_key=${MY_RSA_PUB_KEY}\""
                 sh 'sudo terraform apply boxfuse.tfplan'
+
+                sleep 120 //let the instances to get ready
             }
 
         }
@@ -99,7 +96,6 @@ stage("Request data for AWS") {
 
         steps {
             dir('Ansible') {
-                echo 'Build and deploy Boxfuse project at AWS with Ansible'
 
                 sh "sudo ansible-playbook boxfuse.yml --ssh-extra-args=\"-o StrictHostKeyChecking=no\" --extra-vars \"AWS_AK_ID=${MY_AWS_ACCESS_KEY} AWS_SA_KEY=${MY_AWS_SECRET_KEY} s3bucket=${MY_AWS_S3_BUCKET}\""
             }
