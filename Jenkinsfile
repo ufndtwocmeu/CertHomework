@@ -5,6 +5,14 @@ pipeline {
 
   stages {
 
+
+    stage('Git clone Terraform and Ansible scripts') {
+      steps {
+        git(url: 'https://github.com/ufndtwocmeu/CertHomework.git', branch: 'master')
+      }
+    }
+
+
     stage ('Install Terraform')  {
 
         steps {
@@ -38,13 +46,6 @@ pipeline {
     }
 
    
-    stage('Git clone Terraform and Ansible scripts') {
-      steps {
-        git(url: 'https://github.com/ufndtwocmeu/CertHomework.git', branch: 'master')
-      }
-    }
-
-
 stage("Request data for AWS") {
             steps {
                 script {
